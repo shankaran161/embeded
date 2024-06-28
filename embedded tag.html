@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Video</title>
+    <style>
+        #video-container {
+            display: none; /* Hide initially */
+        }
+    </style>
+</head>
+<body>
+    <h1>VIDEO</h1>
+    <div id="video-container">
+        <video id="main-video" width="100%" height="100%" controls autoplay loop>
+            <source src="aranmanai 4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var video = document.getElementById("main-video");
+            var startSeconds = 6600; // 1 hour 50 minutes = 1 * 60 * 60 + 50 * 60
+            var endSeconds = 8400;   // 2 hours 20 minutes = 2 * 60 * 60 + 20 * 60
+
+            video.addEventListener("timeupdate", function() {
+                if (video.currentTime < startSeconds || video.currentTime > endSeconds) {
+                    video.pause();
+                }
+            });
+
+            video.addEventListener("play", function() {
+                if (video.currentTime < startSeconds || video.currentTime > endSeconds) {
+                    video.currentTime = startSeconds;
+                }
+            });
+
+            video.addEventListener("pause", function() {
+                if (video.currentTime >= endSeconds) {
+                    video.currentTime = startSeconds;
+                }
+            });
+
+            // Show video container after setting up listeners
+            var videoContainer = document.getElementById("video-container");
+            videoContainer.style.display = "block";
+        });
+    </script>
+</body>
+</html>
